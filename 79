@@ -1,0 +1,19 @@
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        memory = set()
+        n, m = len(board), len(board[0])
+        def dfs(x, y, i, memory):
+            if i == len(word):
+                return True
+            if x < 0 or y < 0 or x >= n or y >= m or board[x][y] != word[i] or (x,y) in memory:
+                return False
+
+            memory.add((x,y))
+            boolean = dfs(x, y+1, i+1, memory) or dfs(x+1, y, i+1, memory) or dfs(x-1, y, i+1, memory) or dfs(x, y-1, i+1, memory)
+            memory.remove((x,y))
+            return boolean
+        for x in range(n):
+            for y in range(m):
+                if dfs(x, y, 0, memory):
+                    return True
+        return False
