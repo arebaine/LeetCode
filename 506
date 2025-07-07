@@ -1,0 +1,15 @@
+import numpy as np
+class Solution:
+    def findRelativeRanks(self, score: List[int]) -> List[str]:
+        sorted_place = list(np.argsort(np.array(score)))[::-1]
+        results = [None] * len(score)
+        for i, j in enumerate(sorted_place):
+            if i == 0:
+                results[j] = "Gold Medal"
+            elif i ==1: 
+                results[j] = "Silver Medal"
+            elif i==2:
+                results[j] = "Bronze Medal"
+            else:
+                results[j] = str(i+1)
+        return results
