@@ -1,0 +1,21 @@
+class Solution:
+    def maxFreeTime(self, eventTime: int, k: int, startTime: List[int], endTime: List[int]) -> int:
+        free_time = []
+        free_time.append(startTime[0])
+        n = len(startTime)
+        for i in range(1, n):
+            free_time.append(startTime[i] - endTime[i - 1])
+        free_time.append(eventTime - endTime[-1])
+
+        # Now find the sublist of k+1 elements that maximizes the sum
+        start = 0
+        end = k + 1
+        current_sum = sum(free_time[start:end])
+        max_sum = sum(free_time[start:end])
+        while end <= len(free_time) - 1:
+            current_sum = current_sum - free_time[start] + free_time[end]
+            start += 1
+            end +=1
+            if max_sum <= current_sum:
+                max_sum = current_sum
+        return max_sum
