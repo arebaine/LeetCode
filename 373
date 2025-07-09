@@ -1,0 +1,22 @@
+class Solution:
+    def kSmallestPairs(self, nums1: List[int], nums2: List[int], k: int) -> List[List[int]]:
+        already_seen = set()
+        heap = []
+        i, j = 0, 0
+        smallest = []
+        heapq.heappush(heap, (nums1[i] + nums2[j], i, j))
+        already_seen.add((i,j))
+        while len(smallest) < k:
+            value, i, j = heapq.heappop(heap)
+            smallest.append((nums1[i], nums2[j]))
+            if j < len(nums2) - 1 and (i,j + 1) not in already_seen:
+                heapq.heappush(heap, (nums1[i] + nums2[j + 1], i, j + 1))
+                already_seen.add((i,j + 1))
+            if i < len(nums1) - 1 and (i + 1,j) not in already_seen:
+                heapq.heappush(heap, (nums1[i + 1] + nums2[j], i + 1, j))
+                already_seen.add((i + 1,j))
+            if i < len(nums1) - 1 and j < len(nums2) - 1  and (i + 1,j + 1) not in already_seen:
+                heapq.heappush(heap, (nums1[i + 1] + nums2[j + 1], i + 1, j + 1))
+                already_seen.add((i + 1,j + 1))
+            
+        return smallest
