@@ -1,0 +1,10 @@
+from collections import Counter
+class Solution:
+    def findLucky(self, arr: List[int]) -> int:
+        counter = Counter(arr)
+        counter = list(counter.items())
+        counter = sorted(counter)[::-1]
+        for i in range(len(counter)):
+            if counter[i][0] == counter[i][1]:
+                return counter[i][0]
+        return - 1
