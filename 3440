@@ -1,0 +1,43 @@
+import numpy as np
+class Solution:
+    def maxFreeTime(self, eventTime: int, startTime: List[int], endTime: List[int]) -> int:
+        free_time = []
+        free_time.append(startTime[0])
+        for i in range(1, len(startTime)):
+            free_time.append(startTime[i] - endTime[i - 1])
+        free_time.append(eventTime - endTime[-1])
+        length_events = []
+        for i in range(len(startTime)):
+            length_events.append(endTime[i] - startTime[i])
+        indexes = list(np.argsort(np.array(free_time))[-3:])
+        move_max = 0
+        print("length_events", length_events)
+        print("free_time", free_time)
+        print("indexes", indexes)
+        for i in range(len(length_events)):
+            length = length_events[i]
+            a, b, c = indexes
+            if a not in set([i, i + 1]) and length <= free_time[a]:
+                possible_move = length + free_time[i] + free_time[i + 1]
+                if move_max < possible_move:
+                    move_max = possible_move
+            elif b not in set([i, i + 1]) and length <= free_time[b]:
+                possible_move = length + free_time[i] + free_time[i + 1]
+                if move_max < possible_move:
+                    move_max = possible_move
+            elif c not in set([i, i + 1]) and length <= free_time[c]:
+                possible_move = length + free_time[i] + free_time[i + 1]
+                if move_max < possible_move:
+                    move_max = possible_move
+        
+        begin, end = 0, 2
+        current_sum = free_time[0] + free_time[1]
+        if current_sum > move_max:
+            move_max = current_sum
+        while end <= len(free_time) - 1:
+            current_sum = current_sum - free_time[begin] + free_time[end]
+            if current_sum > move_max:
+                move_max = current_sum
+            begin +=1
+            end +=1
+        return move_max
