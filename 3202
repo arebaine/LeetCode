@@ -1,0 +1,11 @@
+from collections import Counter
+class Solution:
+    def maximumLength(self, nums: List[int], k: int) -> int:
+        res = 0
+        patt = [[0] * k for _ in range(k)]
+        for el in nums:
+            mod = el % k 
+            for j in range(k):
+                patt[mod][j] = patt[j][mod] + 1
+                res = max([res, patt[mod][j]])
+        return res
