@@ -1,0 +1,15 @@
+class Solution:
+    def matchPlayersAndTrainers(self, players: List[int], trainers: List[int]) -> int:
+        players = sorted(players)
+        trainers = sorted(trainers)
+        current_trainer = 0
+        matching = 0
+        for i in range(len(players)):
+            while current_trainer < len(trainers) and trainers[current_trainer] < players[i]:
+                current_trainer +=1
+            if current_trainer == len(trainers):
+                return matching
+            else:
+                matching+=1
+                current_trainer+=1
+        return matching
