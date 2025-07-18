@@ -1,0 +1,22 @@
+class Solution:
+    def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
+        def count_smaller(value):
+            n_smaller = 0
+            row, col = len(matrix) - 1, 0
+            while row >=0 and col < len(matrix[0]):
+                if matrix[row][col] <= value:
+                    n_smaller +=row+1
+                    col +=1
+                else:
+                    row-=1
+            return n_smaller
+        
+        left, right = matrix[0][0], matrix[-1][-1]
+        mid = (right + left) //2
+        while left < right:
+            mid = (right + left) //2
+            if count_smaller(mid) >=k:
+                right = mid
+            else:
+                left = mid + 1
+        return left
