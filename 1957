@@ -1,0 +1,14 @@
+class Solution:
+    def makeFancyString(self, s: str) -> str:
+        fancy_string = ""
+        current_caracter = 0
+        while current_caracter < len(s):
+            j = current_caracter + 1
+            while j < len(s) and s[j] == s[current_caracter]:
+                j+=1
+            if j - current_caracter >= 3:
+                fancy_string = fancy_string + s[current_caracter]*2
+            else:
+                fancy_string = fancy_string + s[current_caracter] * (j - current_caracter)
+            current_caracter = j
+        return fancy_string
