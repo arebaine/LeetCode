@@ -1,0 +1,13 @@
+from collections import Counter
+class Solution:
+    def leastInterval(self, tasks: List[str], n: int) -> int:
+        counter = Counter(tasks)
+        nb_tasks = sorted(list(counter.values()))
+        max_task = nb_tasks[-1]
+        i = -1
+        nb_max = 0
+        while i >= - len(nb_tasks) and nb_tasks[i] == max_task:
+            nb_max+=1
+            i -=1
+        nb_intervals = (max_task - 1) * (n + 1) + nb_max 
+        return max([nb_intervals, len(tasks)])
