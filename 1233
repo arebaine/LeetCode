@@ -1,0 +1,17 @@
+from collections import deque
+class Solution:
+    def removeSubfolders(self, folder: List[str]) -> List[str]:
+        folder = deque(sorted(folder))
+        first = folder.popleft()
+        correct = []
+        correct.append(first)
+        while folder:
+            current = folder.popleft()
+            previous = correct[-1]
+            previous_list = previous.split("/")
+            current_list = current.split("/")
+            if len(current_list) >= len(previous_list) and previous_list != current_list[:len(previous_list)]:
+                correct.append(current)
+            if len(current_list) < len(previous_list):
+                correct.append(current)                
+        return correct
