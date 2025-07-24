@@ -1,0 +1,32 @@
+class Solution:
+    def maximumUniqueSubarray(self, nums: List[int]) -> int:
+        sum_up_to = []
+        sum_to = 0
+        for el in nums:
+            sum_to += el
+            sum_up_to.append(sum_to)
+
+        max_sub = 0
+        i = 0
+        j = 1
+        seen = {nums[0]: 0}
+        while i < len(nums):
+            if i == 0:
+                curr_sum = nums[j - 1]
+            else:
+                curr_sum = sum_up_to[j - 1] - sum_up_to[i - 1]
+            
+            while j < len(nums):
+                if nums[j] not in seen or seen[nums[j]] < i:
+                    seen[nums[j]] = j
+                    curr_sum += nums[j]
+                    j += 1
+                else:
+                    break
+            if curr_sum >= max_sub:
+                max_sub = curr_sum
+            if j < len(nums):
+                i = seen[nums[j]] + 1
+            else:
+                i = j
+        return max_sub
