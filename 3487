@@ -1,0 +1,16 @@
+from collections import Counter
+class Solution:
+    def maxSum(self, nums: List[int]) -> int:
+        counter = list(Counter(nums).keys())
+        max_sum = 0
+        zero_seen = False
+        for i in range(len(counter)):
+            if counter[i] >= 0:
+                max_sum += counter[i]
+            if counter[i] == 0:
+                zero_seen = True
+        if max_sum == 0 and not zero_seen:
+            max_sum = max(nums)
+        return max_sum
+
+        
