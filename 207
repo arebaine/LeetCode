@@ -1,0 +1,25 @@
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        seen = set()
+        adjacent = {i:[] for i in range(numCourses)}
+        for vertice in prerequisites:
+            i, j = vertice
+            adjacent[i].append(j)
+        def dfs(node, visited):
+            if node in visited:
+                return False
+            if node in seen:
+                return True
+            visited.add(node)
+            for neigh in adjacent[node]:
+                if not dfs(neigh, visited):
+                    return False
+            seen.add(node)
+            visited.remove(node)
+            return True
+        for i in range(numCourses):
+            if i not in seen:
+                if not dfs(i, set()):
+                    return False
+                seen.add(i)
+        return True
