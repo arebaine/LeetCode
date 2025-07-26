@@ -1,0 +1,19 @@
+from collections import deque
+class Solution:
+    def isValid(self, s: str) -> bool:
+        opened = deque()
+        closed = deque()
+        pairs = set([('(', ')'), ('[', ']'), ('{', '}')])
+        for par in s:
+            if par in ['(', '{', '[']:
+                opened.append(par)
+            else:
+                if not opened:
+                    return False
+                else:
+                    last_opened = opened.pop()
+                    if (last_opened, par) not in pairs:
+                        return False
+        if opened:
+            return False
+        return True
