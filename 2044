@@ -1,0 +1,15 @@
+import numpy as np
+class Solution:
+    def countMaxOrSubsets(self, nums: List[int]) -> int:
+        max_or = 0
+        for el in nums:
+            max_or |=el
+        def dfs(i, current):
+            if i == len(nums):
+                if current == max_or:
+                    return 1
+                else:
+                    return 0
+            else:
+                return dfs(i+1, current) + dfs(i+1, current | nums[i])
+        return dfs(0, 0)
