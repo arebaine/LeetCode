@@ -1,0 +1,29 @@
+from collections import deque
+import numpy as np
+class Solution:
+    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        adjacency = {i:[] for i in range(numCourses)}
+        for vertice in prerequisites:
+            i,j = vertice
+            adjacency[i].append(j)
+        traversal = []
+        visited = set()
+        visiting = set()
+        def dfs(node):
+            if node in visited:
+                return True
+            if node in visiting:
+                return False
+            visiting.add(node)
+            for neigh in adjacency[node]:
+                if not dfs(neigh):
+                    return False
+            visiting.remove(node)
+            visited.add(node)
+            traversal.append(node)
+            return True
+        for i in range(numCourses):
+            if i not in visited:
+                if not dfs(i):
+                    return []
+        return traversal
