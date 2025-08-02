@@ -1,0 +1,21 @@
+from typing import List
+
+class Solution:
+    def smallestSubarrays(self, nums: List[int]) -> List[int]:
+        max_or = [0]*len(nums)
+        curr_max = 0
+        for i in range(len(nums)-1, -1, -1):
+            curr_max |=nums[i]
+            max_or[i] = curr_max
+        smallest_sub = [0] * len(nums)
+        last_bit_seen = [-1] * 32
+        for i in range(len(nums)-1, -1, -1):
+            for b in range(0, 32):
+                if (nums[i] >> b) & 1:
+                    last_bit_seen[b] = i
+            curr_j = i
+            for b in range(0, 32):
+                if (max_or[i] >> b) & 1:
+                    curr_j = max(curr_j, last_bit_seen[b])
+            smallest_sub[i] = curr_j - i + 1
+        return smallest_sub
