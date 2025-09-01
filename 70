@@ -1,0 +1,10 @@
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        n_ways = [1]*n
+        if n >=2:
+            n_ways[1] = 2
+        i = 2
+        while i < n:
+            n_ways[i] = n_ways[i-1] + n_ways[i-2] 
+            i+=1
+        return n_ways[-1]  
