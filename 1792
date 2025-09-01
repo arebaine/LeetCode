@@ -1,0 +1,14 @@
+from heapq import heapify, heappush, heappop
+class Solution:
+    def maxAverageRatio(self, classes: List[List[int]], extraStudents: int) -> float:
+        gain = [(a/b - (a+1)/(b+1), a, b) for a, b in classes]
+        heapify(gain)
+        for _ in range(extraStudents):
+            _, a, b = heappop(gain)
+            a, b = a+1, b+1
+            heappush(gain, ((a/b - (a+1)/(b+1), a, b)))
+        max_av = 0
+        for _, a, b in gain:
+            max_av += a/b
+        return max_av/len(classes)
+        
