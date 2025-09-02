@@ -1,0 +1,9 @@
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        min_cost = cost.copy()
+        for i in range(2, len(cost)):
+            min_cost[i] += min([min_cost[i-1], min_cost[i-2]])
+        if len(cost) >=2:
+            return min([min_cost[-1], min_cost[-2]])
+        else:
+            return cost[0]
