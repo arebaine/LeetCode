@@ -1,0 +1,27 @@
+import numpy as np
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        board = np.array(board)
+        def check(subboard):
+            subboard = Counter(list(np.array(subboard).reshape(-1)))
+            if '.' in subboard:
+                subboard['.'] = 0
+            subboard = list(subboard.values())
+            if max(subboard) > 1:
+                return False
+            return True
+        for line in range(9):
+            if not check(board[line]):
+                print("line", line)
+                print(board[line])
+                return False
+        for col in range(9):
+            if not check(board[:,col]):
+                print("col", col)
+                return False
+        for i in range(3):
+            for j in range(3):
+                if not check(board[3*i:3*i +3, 3*j:3*j +3]):
+                    print("sub", i, j)
+                    return False
+        return True
