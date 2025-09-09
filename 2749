@@ -1,0 +1,10 @@
+from itertools import count
+class Solution:
+    def makeTheIntegerZero(self, num1: int, num2: int) -> int:
+        for k in count(1):
+            x = num1 - k*num2
+            if x >=0:
+                if x.bit_count() <= k and k <= x:
+                    return k
+            else:
+                return -1
