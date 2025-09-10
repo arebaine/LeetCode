@@ -1,0 +1,19 @@
+from itertools import count
+class Solution:
+    def numSquares(self, n: int) -> int:
+        min_square = [-1]*(n+1)
+        for k in count(1):
+            if k**2 > n:
+                break
+            else:
+                min_square[k**2] = 1
+        for integer in range(2, n+1):
+            if min_square[integer] != -1:
+                continue
+            possible = []
+            for k in count(1):
+                if k**2 > integer:
+                    break
+                possible.append(min_square[integer - k**2])
+            min_square[integer] = min(possible) + 1
+        return min_square[n]
