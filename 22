@@ -1,0 +1,13 @@
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        ans = []
+        def dfs(openn, clos, pat):
+            if len(pat) == 2*n:
+                ans.append(pat)
+                return 
+            if openn < n:
+                dfs(openn+1, clos, pat+'(')
+            if clos < openn:
+                dfs(openn, clos+1, pat+')') 
+        dfs(0,0,"")
+        return ans               
