@@ -1,0 +1,26 @@
+class Solution:
+    def minimumTeachings(self, n: int, languages: List[List[int]], friendships: List[List[int]]) -> int:
+        problematic_users = set()
+        problematic_languages = dict()
+        for x, y in friendships:
+            languages_x = set(languages[x-1])
+            languages_y = set(languages[y-1])
+            if not languages_x.intersection(languages_y):
+                if x not in problematic_users:
+                    for el in languages_x:
+                        if el not in problematic_languages.keys():
+                            problematic_languages[el] = 1
+                        else:
+                            problematic_languages[el] += 1
+                if y not in problematic_users:
+                    for el in languages_y:
+                        if el not in problematic_languages.keys():
+                            problematic_languages[el] = 1
+                        else:
+                            problematic_languages[el] += 1
+                problematic_users.add(x)
+                problematic_users.add(y)
+        if not problematic_users:
+            return 0
+        most_common_language = max(list(problematic_languages.values()))
+        return len(problematic_users) - most_common_language
