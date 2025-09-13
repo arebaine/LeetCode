@@ -1,0 +1,19 @@
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        def dfs(node):
+            if not node:
+                return set()
+            left = dfs(node.left)
+            if isinstance(left, TreeNode):
+                return left
+            right = dfs(node.right)
+            if isinstance(right, TreeNode):
+                return right
+            node_set = left.union(right)
+            node_set.add(node)
+            
+            if p in node_set and q in node_set:
+                    return node
+            return node_set
+        
+        return dfs(root)
