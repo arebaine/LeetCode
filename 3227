@@ -1,0 +1,10 @@
+class Solution:
+    def doesAliceWin(self, s: str) -> bool:
+        count_vowels = 0 
+        vowels = "aeiou"
+        for el in s:
+            if el in vowels:
+                count_vowels+=1
+        if count_vowels > 0:
+            return True
+        return False
