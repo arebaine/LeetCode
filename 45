@@ -1,0 +1,12 @@
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        coverage = 0
+        curr = 0
+        n_jump = 0
+        for i, el in enumerate(nums[:-1]):
+            coverage = max(coverage, i + nums[i])
+            if i == curr:
+                n_jump+=1
+                curr = coverage
+        return n_jump
+        
