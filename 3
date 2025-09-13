@@ -1,0 +1,18 @@
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        last_position = dict()
+        if len(s) == 0:
+            return 0
+        last_position[s[0]] = 0
+        longest_sub = 1
+        i = 1
+        begin_sub = 0
+        while i < len(s):
+            if s[i] not in last_position or last_position[s[i]] < begin_sub:
+                last_position[s[i]] = i
+            else:
+                longest_sub = max(longest_sub, i - begin_sub)
+                begin_sub = last_position[s[i]] + 1
+                last_position[s[i]] = i
+            i+=1
+        return max(longest_sub, i - begin_sub)
