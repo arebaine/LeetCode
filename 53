@@ -1,0 +1,7 @@
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        max_sub = [el for el in nums]
+        for i in range(-2, -len(nums)-1,-1):
+            if max_sub[i +1] > 0:
+                max_sub[i] += max_sub[i +1]
+        return max(max_sub)
