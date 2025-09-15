@@ -1,0 +1,33 @@
+class Solution:
+    def numDecodings(self, s: str) -> int:
+        n_ways = [0]*len(s)
+        n_ways[0] = 1
+        if s[0] =="0":
+            return 0
+        if len(s) >= 2:
+            if s[0] =="0":
+                return 0
+            if int(s[1]) == 0 and int(s[0]) >= 3:
+                return 0
+            if int(s[:2]) <= 26 and int(s[:2]) !=10 and int(s[:2]) !=20:
+                n_ways[1] = 2
+            elif int(s[:2]) == 10 or int(s[:2]) ==20:
+                n_ways[1] = 1
+            else:
+                n_ways[1] = 1
+        for j in range(2, len(s)):
+            if s[j] == "0":
+                if s[j-1] not in ["1", "2"]:
+                    return 0
+                else:
+                    n_ways[j] = n_ways[j-2]
+            else:
+                if s[j-1] != "0" and s[j] != "0" and int(s[j-1:j+1]) <= 26:
+                    n_ways[j] = n_ways[j-2] + n_ways[j-1]
+                if s[j-1] != "0" and s[j] != "0" and int(s[j-1:j+1]) > 26:
+                    n_ways[j] = n_ways[j-1]
+                if s[j-1] == "0" and s[j-2] not in ["1", "2"]:
+                    return 0
+                if s[j-1] == "0" and s[j-2] in ["1", "2"] and int(s[j]) >=1:
+                    n_ways[j] = n_ways[j-1]
+        return n_ways[-1]
