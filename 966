@@ -1,0 +1,42 @@
+class Solution:
+    def spellchecker(self, wordlist: List[str], queries: List[str]) -> List[str]:
+        vowel_per = dict()
+        wordset = set(wordlist)
+        wordlower = dict()
+        for i,word in enumerate(wordlist):
+            word = word.lower()
+
+            if word not in wordlower:
+                wordlower[word] = []
+            wordlower[word].append(i)
+            
+
+            rmv_vow = ""
+            for el in word:
+                if el not in "aeiou":
+                    rmv_vow = rmv_vow + el
+                else:
+                    rmv_vow = rmv_vow + "_"
+
+            key = rmv_vow
+            if key not in vowel_per:
+                vowel_per[key] = []
+            vowel_per[key].append(i)
+        out = []
+        for word in queries:
+            rmv_vow = ""
+            for el in word.lower():
+                if el not in "aeiou":
+                    rmv_vow = rmv_vow + el
+                else:
+                    rmv_vow = rmv_vow + "_"
+            if word in wordset:
+                out.append(word)
+            elif word.lower() in wordlower:
+                out.append(wordlist[wordlower[word.lower()][0]])
+            elif rmv_vow in vowel_per:
+                out.append(wordlist[vowel_per[rmv_vow][0]])
+            else:
+                out.append("")
+        return out
+
